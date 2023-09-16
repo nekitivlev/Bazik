@@ -1,0 +1,8 @@
+task1:
+  exec: ../Bazik_tests/tests_utils/non-existent_task_test.sh
+  is_executable: fasdfasdfsd
+  dependencies: []
+  inputs:
+    - input1.txt
+  outputs:
+    - output1.txt

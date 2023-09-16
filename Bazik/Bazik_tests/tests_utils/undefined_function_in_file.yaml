@@ -1,0 +1,8 @@
+task1:
+  func: undefined_func
+  func_file: tasks.py
+  dependencies: []
+  inputs:
+    - input1.txt
+  outputs:
+    - output1.txt

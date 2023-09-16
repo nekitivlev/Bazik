@@ -1,0 +1,1 @@
+Function 'undefined_func' not defined in file '/home/nikita/Bazik/Bazik/Bazik_tests/tests_utils/tasks.py': name 'undefined_func' is not defined

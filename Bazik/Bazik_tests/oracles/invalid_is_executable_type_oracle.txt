@@ -1,0 +1,1 @@
+'is_executable' field in task 'task1' must be a boolean.

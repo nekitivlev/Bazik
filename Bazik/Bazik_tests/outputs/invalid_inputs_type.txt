@@ -1,0 +1,1 @@
+'inputs' field in task 'task1' must be a list.

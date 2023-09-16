@@ -1,0 +1,7 @@
+bazik_run:
+  exec: ../Bazik_tests/bazik_run.sh
+  is_executable: true
+  dependencies: []
+  inputs:
+    - ./parameters_for_bazik_run.txt
+  outputs: []

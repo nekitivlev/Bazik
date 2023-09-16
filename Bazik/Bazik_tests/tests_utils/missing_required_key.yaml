@@ -1,0 +1,5 @@
+task1:
+  func_file: tasks.py
+  dependencies: []
+  outputs:
+    - output1.txt

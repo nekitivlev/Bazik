@@ -1,0 +1,79 @@
+remove_comments:
+  func: remove_comments
+  func_file: tasks.py
+  inputs:
+    - main_with_comments.cpp
+  outputs:
+    - main_without_comments.cpp
+
+remove_comments_check:
+  exec: ../functionality_test/testers/tester1.sh
+  is_executable: true
+  dependencies: [remove_comments]
+  inputs:
+    - main_without_comments.cpp
+    - oracles/main_without_comments_oracle.cpp
+  outputs: []
+
+
+compile:
+  exec: ../functionality_test/compilation.sh
+  is_executable: true
+  dependencies: [remove_comments]
+  inputs:
+    - main_without_comments.cpp
+  outputs:
+    - a.out
+
+compile_check:
+  exec: ../functionality_test/testers/tester2.sh
+  is_executable: true
+  dependencies: [compile]
+  inputs:
+    - a.out
+    - oracles/a_oracle.out
+  outputs: []
+
+
+run_bin:
+  exec: ../functionality_test/a.out
+  is_executable: true
+  dependencies: [compile]
+  inputs: []
+  outputs:
+    - output.txt
+
+run_bin_check:
+  exec: ../functionality_test/testers/tester3.sh
+  is_executable: true
+  dependencies: [run_bin]
+  inputs:
+    - output.txt
+    - oracles/output_oracle.txt
+  outputs: []
+
+difference:
+  exec: ../functionality_test/difference_of_two_files.sh
+  is_executable: true
+  dependencies: [remove_comments]
+  inputs:
+    - main_with_comments.cpp
+    - main_without_comments.cpp
+  outputs:
+    - result_of_compare.txt
+
+difference_check:
+  exec: ../functionality_test/testers/tester4.sh
+  is_executable: true
+  dependencies: [difference]
+  inputs:
+    - result_of_compare.txt
+    - oracles/result_of_compare_oracle.txt
+  outputs: []
+
+run_all_tests:
+  exec: echo
+  is_executable: true
+  dependencies: [remove_comments_check, compile_check, run_bin_check, difference_check]
+  inputs: []
+  outputs: []

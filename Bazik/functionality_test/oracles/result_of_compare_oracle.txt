@@ -1,0 +1,19 @@
+4,7c4
+< /*
+< big
+< comment
+< */
+---
+> 
+9c6
+<     // comment
+---
+>     
+11c8
+<     // Check if the file is opened successfully
+---
+>     
+17c14
+<     // Write the string \to the file
+---
+>     

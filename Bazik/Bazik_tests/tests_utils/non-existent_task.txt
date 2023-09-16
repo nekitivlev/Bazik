@@ -1,0 +1,2 @@
+"task": "non_existent_task"
+"task_graph": "../Bazik_tests/tests_utils/valid_task_graph.yaml"

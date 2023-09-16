@@ -1,0 +1,1 @@
+Task 'task1' is missing required key: 'inputs'

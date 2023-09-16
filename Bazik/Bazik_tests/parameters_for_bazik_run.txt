@@ -1,0 +1,2 @@
+"task": "run_all_tests"
+"task_graph": "../Bazik_tests/task_graph.yaml"

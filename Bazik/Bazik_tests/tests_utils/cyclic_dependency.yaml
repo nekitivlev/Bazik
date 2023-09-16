@@ -1,0 +1,35 @@
+task1:
+  func: my_func1
+  func_file: tasks.py
+  dependencies: [task4]
+  inputs:
+    - input1.txt
+  outputs:
+    - output1.txt
+
+task2:
+  func: my_func1
+  func_file: tasks.py
+  dependencies: [task1]
+  inputs:
+    - output1.txt
+  outputs:
+    - output2.txt
+
+task3:
+  func: my_func1
+  func_file: tasks.py
+  dependencies: [task2]
+  inputs:
+    - output2.txt
+  outputs:
+    - output3.txt
+
+task4:
+  func: my_func1
+  func_file: tasks.py
+  dependencies: [task3]
+  inputs:
+    - output3.txt
+  outputs:
+    - output4.txt

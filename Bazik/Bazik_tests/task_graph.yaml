@@ -1,0 +1,262 @@
+valid_test:
+  func: run_test_for_load_graph
+  func_file: tests.py
+  dependencies: []
+  inputs:
+    - ./tests_utils/valid_task_graph.yaml
+  outputs:
+    - ./outputs/valid_task_graph.txt
+
+valid_test_check:
+  func: compare_files
+  func_file: tests.py
+  dependencies: [valid_test]
+  inputs:
+    - oracles/valid_task_graph_oracle.txt
+    - outputs/valid_task_graph.txt
+  outputs:
+    - test_results/test1_result.txt
+
+undefined_function_test:
+  func: run_test_for_load_graph
+  func_file: tests.py
+  dependencies: []
+  inputs:
+    - tests_utils/undefined_function_in_file.yaml
+  outputs:
+    - outputs/undefined_function_in_file.txt
+
+undefined_function_test_check:
+  func: compare_files
+  func_file: tests.py
+  dependencies: [undefined_function_test]
+  inputs:
+    - oracles/undefined_function_in_file_oracle.txt
+    - outputs/undefined_function_in_file.txt
+  outputs:
+    - test_results/test2_result.txt
+
+missing_required_key_test:
+  func: run_test_for_load_graph
+  func_file: tests.py
+  dependencies: []
+  inputs:
+    - tests_utils/missing_required_key.yaml
+  outputs:
+    - outputs/missing_required_key.txt
+
+missing_required_key_check:
+  func: compare_files
+  func_file: tests.py
+  dependencies: [missing_required_key_test]
+  inputs:
+    - oracles/missing_required_key_oracle.txt
+    - outputs/missing_required_key.txt
+  outputs:
+    - test_results/test3_result.txt
+
+invalid_test:
+  func: run_test_for_load_graph
+  func_file: tests.py
+  dependencies: []
+  inputs:
+    - tests_utils/invalid.yaml
+  outputs:
+    - outputs/invalid.txt
+
+invalid_test_check:
+  func: compare_files
+  func_file: tests.py
+  dependencies: [invalid_test]
+  inputs:
+    - oracles/missing_required_key_oracle.txt
+    - outputs/missing_required_key.txt
+  outputs:
+    - test_results/test4_result.txt
+
+invalid_is_executable_type_test:
+  func: run_test_for_load_graph
+  func_file: tests.py
+  dependencies: []
+  inputs:
+    - tests_utils/invalid_is_executable_type.yaml
+  outputs:
+    - outputs/invalid_is_executable_type.txt
+
+invalid_is_executable_type_test_check:
+  func: compare_files
+  func_file: tests.py
+  dependencies: [invalid_is_executable_type_test]
+  inputs:
+    - outputs/invalid_is_executable_type.txt
+    - oracles/invalid_is_executable_type_oracle.txt
+  outputs:
+    - test_results/test5_result.txt
+
+invalid_inputs_type_test:
+  func: run_test_for_load_graph
+  func_file: tests.py
+  dependencies: []
+  inputs:
+    - tests_utils/invalid_inputs_type.yaml
+  outputs:
+    - outputs/invalid_inputs_type.txt
+
+invalid_inputs_type_test_check:
+  func: compare_files
+  func_file: tests.py
+  dependencies: [invalid_inputs_type_test]
+  inputs:
+    - outputs/invalid_inputs_type.txt
+    - oracles/invalid_inputs_type_oracle.txt
+  outputs:
+    - test_results/test6_result.txt
+
+invalid_dependencies_type_test:
+  func: run_test_for_load_graph
+  func_file: tests.py
+  dependencies: []
+  inputs:
+    - tests_utils/invalid_dependencies_type.yaml
+  outputs:
+    - outputs/invalid_dependencies_type.txt
+
+invalid_dependencies_type_test_check:
+  func: compare_files
+  func_file: tests.py
+  dependencies: [invalid_dependencies_type_test]
+  inputs:
+    - outputs/invalid_dependencies_type.txt
+    - oracles/invalid_dependencies_type_oracle.txt
+  outputs:
+    - test_results/test7_result.txt
+
+cyclic_dependency_test:
+  func: run_test_for_load_graph
+  func_file: tests.py
+  dependencies: []
+  inputs:
+    - tests_utils/cyclic_dependency.yaml
+  outputs:
+    - outputs/cyclic_dependency.txt
+
+cyclic_dependency_test_check:
+  func: compare_files
+  func_file: tests.py
+  dependencies: [cyclic_dependency_test]
+  inputs:
+    - outputs/cyclic_dependency.txt
+    - oracles/cyclic_dependency_oracle.txt
+  outputs:
+    - test_results/test8_result.txt
+
+remove_comments:
+  func: remove_comments
+  func_file: tests_utils/tasks_for_functionality_test.py
+  dependencies: []
+  inputs:
+    - tests_utils/main_with_comments.cpp
+  outputs:
+    - outputs/main_without_comments.cpp
+
+remove_comments_check:
+  exec: ../Bazik_tests/tests_utils/testers/tester1.sh
+  is_executable: true
+  dependencies: [remove_comments]
+  inputs:
+    - outputs/main_without_comments.cpp
+    - oracles/main_without_comments_oracle.cpp
+  outputs: []
+
+compile:
+  exec: ../Bazik_tests/tests_utils/compilation.sh
+  is_executable: true
+  dependencies: [remove_comments]
+  inputs:
+    - outputs/main_without_comments.cpp
+  outputs:
+    - outputs/a.out
+
+compile_check:
+  exec: ../Bazik_tests/tests_utils/testers/tester2.sh
+  is_executable: true
+  dependencies: [compile]
+  inputs:
+    - outputs/a.out
+    - oracles/a_oracle.out
+  outputs: []
+
+run_bin:
+  exec: ../Bazik_tests/outputs/a.out
+  is_executable: true
+  dependencies: [compile]
+  inputs: []
+  outputs:
+    - outputs/output.txt
+
+run_bin_check:
+  exec: ../Bazik_tests/tests_utils/testers/tester3.sh
+  is_executable: true
+  dependencies: [run_bin]
+  inputs:
+    - outputs/output.txt
+    - oracles/output_oracle.txt
+  outputs: []
+
+difference:
+  exec: ../Bazik_tests/tests_utils/difference_of_two_files.sh
+  is_executable: true
+  dependencies: [remove_comments]
+  inputs:
+    - tests_utils/main_with_comments.cpp
+    - outputs/main_without_comments.cpp
+  outputs:
+    - outputs/result_of_compare.txt
+
+difference_check:
+  exec: ../Bazik_tests/tests_utils/testers/tester4.sh
+  is_executable: true
+  dependencies: [difference]
+  inputs:
+    - outputs/result_of_compare.txt
+    - oracles/result_of_compare_oracle.txt
+  outputs: []
+
+non-existent_task_test:
+  exec: ../Bazik_tests/tests_utils/non-existent_task_test.sh
+  is_executable: true
+  dependencies: []
+  inputs:
+    - tests_utils/non-existent_task.txt
+  outputs:
+    - outputs/non-existent_task_out.txt
+
+non-existent_task_test_check:
+  func: compare_files
+  func_file: tests.py
+  dependencies: [non-existent_task_test]
+  inputs:
+    - oracles/non-existent_task_out_oracle.txt
+    - outputs/non-existent_task_out.txt
+  outputs:
+    - test_results/test13_result.txt
+
+run_all_tests:
+  exec: ../Bazik_tests/tests_utils/run_all_tests.sh
+  is_executable: true
+  dependencies:
+    - valid_test_check
+    - undefined_function_test_check
+    - missing_required_key_check
+    - invalid_test_check
+    - invalid_is_executable_type_test_check
+    - invalid_inputs_type_test_check
+    - invalid_dependencies_type_test_check
+    - cyclic_dependency_test_check
+    - remove_comments_check
+    - compile_check
+    - run_bin_check
+    - difference_check
+    - non-existent_task_test_check
+  inputs: []
+  outputs: []

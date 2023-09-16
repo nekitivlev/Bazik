@@ -1,0 +1,9 @@
+task1
+  func: my_func1
+  func_file tasks.py
+  is_executable false
+  dependencies []
+  inputs 
+    - input1.txt
+  outputs 
+    - output1.txt

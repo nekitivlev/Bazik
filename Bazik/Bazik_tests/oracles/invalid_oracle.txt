@@ -1,0 +1,2 @@
+Failed to load task graph: mapping values are not allowed here
+  in "/home/nikita/PycharmProjects/Bazik/Bazik_tests/tests_utils/invalid.yaml", line 2, column 7
